@@ -4,20 +4,31 @@ using UnityEngine;
 
 public class Node 
 {
-    private (Node, int, string) adjacentList;
+    private ArrayList adjacencyList = new ArrayList();  
     private bool isVisited;
+    private int ID;
+    private Node northNode = null;
+    private Node southNode = null;
+    private Node eastNode = null;
+    private Node westNode = null;
 
-    public Node((Node, int, string) adjacentList)
+    public Node(int ID)
     {
-        if (adjacentList.Item1 != null)
-            this.adjacentList = adjacentList;
-
+        this.ID = ID;
         this.isVisited = false;
     }
 
-    public (Node, int, string) GetAdjacencyList()
+    public ArrayList GetAdjacencyList()
     {
-        return this.adjacentList;
+        return this.adjacencyList;
+    }
+    
+    public void AddAdjacentNode((Node, int, string) newNode)
+    {
+        //Node = Node object
+        //int = ID of the new Node object   
+        //string = direction of the adjacent Node object
+        this.adjacencyList.Add(newNode);
     }
 
     public bool getIsVisited()
@@ -29,5 +40,30 @@ public class Node
     {
         this.isVisited = isVisited;
     }
+    public int getID()
+    {
+        return this.ID;
+    }
+
+    public void setNorth(Node node)
+    {
+        this.northNode = node;
+    }
+
+    public void setSouth(Node node)
+    {
+        this.southNode = node;
+    }
+
+    public void setEast(Node node)
+    {
+        this.eastNode = node;
+    }
+
+    public void setWest(Node node)
+    {
+        this.westNode = node;
+    }
+
 
 }
