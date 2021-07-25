@@ -31,7 +31,7 @@ public class Room : MonoBehaviour
     }
 
 
-    public Vector3 spawnAndGetPosition(string direction)
+    public Vector3 openWallsAndGetPosition(string direction)
     {
         switch (direction)
         {
