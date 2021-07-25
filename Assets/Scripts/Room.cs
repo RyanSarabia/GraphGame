@@ -11,6 +11,10 @@ public class Room : MonoBehaviour
     [SerializeField] private Wall eastWall;
     [SerializeField] private Wall westWall;
 
+    private Room northNeighbor;
+    private Room westNeighbor;
+    private Room eastNeighbor;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -48,5 +52,34 @@ public class Room : MonoBehaviour
     public void lightOff()
     {
         roomLight.SetActive(false);
+    }
+
+    public void setNeighbor(Room neighbor, string localDirection)
+    {
+        switch (localDirection)
+        {
+            case GraphGameEventNames.LOCAL_NORTH: northNeighbor = neighbor; break;
+            case GraphGameEventNames.LOCAL_EAST: eastNeighbor = neighbor; break;
+            case GraphGameEventNames.LOCAL_WEST: westNeighbor = neighbor; break;
+        }
+    }
+    public Room getNeighbor(string localDirection)
+    {
+        switch (localDirection)
+        {
+            case GraphGameEventNames.LOCAL_NORTH: return northNeighbor;
+            case GraphGameEventNames.LOCAL_EAST: return eastNeighbor;
+            case GraphGameEventNames.LOCAL_WEST: return westNeighbor;
+            default: return null;
+        }
+    }
+
+    public List<Room> getNeighbors()
+    {
+        List<Room> neighbors = new List<Room>();
+        neighbors.Add(northNeighbor);
+        neighbors.Add(eastNeighbor);
+        neighbors.Add(westNeighbor);
+        return neighbors;
     }
 }
