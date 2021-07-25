@@ -175,7 +175,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnOrigin: {fileID: 1042385623}
-  roomCopy: {fileID: 6654222170083855456, guid: 65ab32eeccee1df44bef44c0cb49ebfb, type: 3}
+  roomCopy: {fileID: 8941308946235080655, guid: 65ab32eeccee1df44bef44c0cb49ebfb, type: 3}
+  numberOfRooms: 10
 --- !u!1001 &417485125
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -889,7 +890,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1616092670
 PrefabInstance:

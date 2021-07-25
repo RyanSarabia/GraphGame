@@ -6,14 +6,17 @@ public class Room : MonoBehaviour
 {
     [SerializeField] private GameObject roomLight;
 
-    [SerializeField] private GameObject south;
-    [SerializeField] private Wall northWall;
-    [SerializeField] private Wall eastWall;
-    [SerializeField] private Wall westWall;
+    [SerializeField] private Wall upWall;
+    [SerializeField] private Wall downWall;
+    [SerializeField] private Wall rightWall;
+    [SerializeField] private Wall leftWall;
 
-    private Room northNeighbor;
-    private Room westNeighbor;
-    private Room eastNeighbor;
+    private Vector2 coordinate = new Vector2();
+
+    private Room upNeighbor;
+    private Room rightNeighbor;
+    private Room leftNeighbor;
+    private Room downNeighbor;
 
     // Start is called before the first frame update
     void Start()
@@ -32,15 +35,18 @@ public class Room : MonoBehaviour
     {
         switch (direction)
         {
-            case GraphGameEventNames.LOCAL_NORTH:
-                northWall.openWall();
-                return northWall.getNextRoomPosition();
-            case GraphGameEventNames.LOCAL_EAST:
-                northWall.openWall();
-                return northWall.getNextRoomPosition();
-            case GraphGameEventNames.LOCAL_WEST:
-                northWall.openWall();
-                return northWall.getNextRoomPosition();
+            case GraphGameEventNames.DIRECTION_UP:
+                upWall.openWall();
+                return upWall.getNextRoomPosition();
+            case GraphGameEventNames.DIRECTION_DOWN:
+                downWall.openWall();
+                return downWall.getNextRoomPosition();
+            case GraphGameEventNames.DIRECTION_LEFT:
+                leftWall.openWall();
+                return leftWall.getNextRoomPosition();
+            case GraphGameEventNames.DIRECTION_RIGHT:
+                rightWall.openWall();
+                return rightWall.getNextRoomPosition();
             default: return Vector3.zero;
         }
     }
@@ -55,22 +61,33 @@ public class Room : MonoBehaviour
         roomLight.SetActive(false);
     }
 
+    public void setCoordinate(Vector2 newCoor)
+    {
+        coordinate = newCoor;
+    }
+    public Vector2 getCoordinate()
+    {
+        return coordinate;
+    }
+
     public void setNeighbor(Room neighbor, string localDirection)
     {
         switch (localDirection)
         {
-            case GraphGameEventNames.LOCAL_NORTH: northNeighbor = neighbor; break;
-            case GraphGameEventNames.LOCAL_EAST: eastNeighbor = neighbor; break;
-            case GraphGameEventNames.LOCAL_WEST: westNeighbor = neighbor; break;
+            case GraphGameEventNames.DIRECTION_UP: upNeighbor = neighbor; break;
+            case GraphGameEventNames.DIRECTION_DOWN: downNeighbor = neighbor; break;
+            case GraphGameEventNames.DIRECTION_LEFT: leftNeighbor = neighbor; break;
+            case GraphGameEventNames.DIRECTION_RIGHT: leftNeighbor = neighbor; break;
         }
     }
     public Room getNeighbor(string localDirection)
     {
         switch (localDirection)
         {
-            case GraphGameEventNames.LOCAL_NORTH: return northNeighbor;
-            case GraphGameEventNames.LOCAL_EAST: return eastNeighbor;
-            case GraphGameEventNames.LOCAL_WEST: return westNeighbor;
+            case GraphGameEventNames.DIRECTION_UP: return upNeighbor; 
+            case GraphGameEventNames.DIRECTION_DOWN: return downNeighbor; 
+            case GraphGameEventNames.DIRECTION_LEFT: return leftNeighbor; 
+            case GraphGameEventNames.DIRECTION_RIGHT: return rightNeighbor; 
             default: return null;
         }
     }
@@ -78,9 +95,10 @@ public class Room : MonoBehaviour
     public List<Room> getNeighbors()
     {
         List<Room> neighbors = new List<Room>();
-        neighbors.Add(northNeighbor);
-        neighbors.Add(eastNeighbor);
-        neighbors.Add(westNeighbor);
+        neighbors.Add(upNeighbor);
+        neighbors.Add(downNeighbor);
+        neighbors.Add(leftNeighbor);
+        neighbors.Add(rightNeighbor);
         return neighbors;
     }
 }

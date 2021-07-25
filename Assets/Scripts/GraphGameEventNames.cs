@@ -16,4 +16,8 @@ public class GraphGameEventNames
     public const string LOCAL_SOUTH = "LOCAL_SOUTH";
     public const string LOCAL_EAST = "LOCAL_EAST";
     public const string LOCAL_WEST = "LOCAL_WEST";
+    public const string DIRECTION_UP = "DIRECTION_UP";
+    public const string DIRECTION_DOWN = "DIRECTION_DOWN";
+    public const string DIRECTION_LEFT = "DIRECTION_LEFT";
+    public const string DIRECTION_RIGHT = "DIRECTION_RIGHT";
 }
