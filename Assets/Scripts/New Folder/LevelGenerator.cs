@@ -2,42 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GraphSpawner : MonoBehaviour
+public class LevelGenerator : MonoBehaviour
 {
-    /*
-    [SerializeField] private GameObject spawnOrigin;
-    [SerializeField] private Room roomCopy;
-    [SerializeField] private List<Room> roomList;
-
-    private Room curRoom;
-    private Room nextRoom;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        curRoom = GameObject.Instantiate(this.roomCopy, this.transform);
-        curRoom.transform.position = spawnOrigin.transform.position;
-        roomList.Add(curRoom);
-
-        for(int i=0; i<5; i++)
-        {
-            nextRoom = GameObject.Instantiate(this.roomCopy, this.transform);
-            nextRoom.transform.position = curRoom.spawnAndGetPosition(GraphGameEventNames.LOCAL_NORTH);
-            curRoom = nextRoom;
-            roomList.Add(curRoom);
-        }
-    }
-    */
-
     Vector2 worldSize = new Vector2(4, 4);
     RoomData[,] rooms;
     List<Vector2> takenPositions = new List<Vector2>();
-    public int numberOfRooms = 10;
+    public int numberOfRooms = 20;
     int gridSizeX, gridSizeY;
     // Start is called before the first frame update
     void Start()
     {
-        if (numberOfRooms >= (worldSize.x * 2) * (worldSize.y * 2))
+        if (numberOfRooms >= (worldSize.x*2) * (worldSize.y * 2))
         {
             numberOfRooms = Mathf.RoundToInt((worldSize.x * 2) * (worldSize.y * 2));
         }
@@ -45,11 +20,6 @@ public class GraphSpawner : MonoBehaviour
         gridSizeY = Mathf.RoundToInt(worldSize.y);
         CreateRooms();
 
-        foreach (var item in takenPositions)
-        {
-            Debug.Log(item);
-        }
-        Debug.Log(takenPositions.Count);
     }
 
     void CreateRooms()
@@ -59,18 +29,16 @@ public class GraphSpawner : MonoBehaviour
         takenPositions.Insert(0, Vector2.zero);
         Vector2 checkPos = Vector2.zero;
 
-        //float randomCompare = 0.2f, randomCompareStart = 0.2f, randomCompareEnd = 0.01f;
-        for (int i = 0; i < numberOfRooms - 1; i++)
+        float randomCompare = 0.2f, randomCompareStart = 0.2f, randomCompareEnd = 0.01f;
+        for (int i=0; i<numberOfRooms -1; i++)
         {
-            //float randomPerc = ((float)i) / (((float)numberOfRooms - 1));
-            //randomCompare = Mathf.Lerp(randomCompareStart, randomCompareEnd, randomPerc);
+            float randomPerc = ((float)i) / (((float)numberOfRooms - 1));
+            randomCompare = Mathf.Lerp(randomCompareStart, randomCompareEnd, randomPerc);
             checkPos = NewPosition();
-
-            rooms[(int)checkPos.x + gridSizeX, (int)checkPos.y + gridSizeY] = new RoomData(checkPos);
-            takenPositions.Insert(0, checkPos);
         }
 
-        
+        rooms[(int)checkPos.x + gridSizeX, (int)checkPos.y + gridSizeY] = new RoomData(checkPos);
+        takenPositions.Insert(0, checkPos);
 
     }
 
@@ -110,5 +78,11 @@ public class GraphSpawner : MonoBehaviour
             checkingPos = new Vector2(x, y);
         } while (takenPositions.Contains(checkingPos) || x >= gridSizeX || x < -gridSizeX || y >= gridSizeY || y < -gridSizeY); //make sure the position is valid
         return checkingPos;
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
     }
 }
