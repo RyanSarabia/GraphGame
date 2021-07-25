@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class GraphGameEventNames
 {
+    //Events
     public const string LIGHT_UP = "LIGHT_UP";
+
+    //Strings
     public const string NORTH = "NORTH";
     public const string SOUTH = "SOUTH";
     public const string EAST = "EAST";
