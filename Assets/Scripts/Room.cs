@@ -14,7 +14,7 @@ public class Room : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        roomLight.SetActive(false);
+        //roomLight.SetActive(false);
     }
 
     // Update is called once per frame
@@ -38,5 +38,15 @@ public class Room : MonoBehaviour
                 return northWall.getNextRoomPosition();
             default: return Vector3.zero;
         }
+    }
+
+    public void lightOn()
+    {
+        roomLight.SetActive(true);
+    }
+
+    public void lightOff()
+    {
+        roomLight.SetActive(false);
     }
 }
