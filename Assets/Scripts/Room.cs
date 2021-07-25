@@ -27,6 +27,7 @@ public class Room : MonoBehaviour
         
     }
 
+
     public Vector3 spawnAndGetPosition(string direction)
     {
         switch (direction)
