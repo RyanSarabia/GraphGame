@@ -6,16 +6,10 @@ public class Room : MonoBehaviour
 {
     [SerializeField] private GameObject roomLight;
 
-    [SerializeField] private GameObject northOpen;
-    [SerializeField] private GameObject northClose;
-
-    [SerializeField] private GameObject eastOpen;
-    [SerializeField] private GameObject eastClose;
-
-    [SerializeField] private GameObject westOpen;
-    [SerializeField] private GameObject westClose;
-
     [SerializeField] private GameObject south;
+    [SerializeField] private Wall northWall;
+    [SerializeField] private Wall eastWall;
+    [SerializeField] private Wall westWall;
 
     // Start is called before the first frame update
     void Start()
@@ -27,5 +21,22 @@ public class Room : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public Vector3 spawnAndGetPosition(string direction)
+    {
+        switch (direction)
+        {
+            case GraphGameEventNames.LOCAL_NORTH:
+                northWall.openWall();
+                return northWall.getNextRoomPosition();
+            case GraphGameEventNames.LOCAL_EAST:
+                northWall.openWall();
+                return northWall.getNextRoomPosition();
+            case GraphGameEventNames.LOCAL_WEST:
+                northWall.openWall();
+                return northWall.getNextRoomPosition();
+            default: return Vector3.zero;
+        }
     }
 }
