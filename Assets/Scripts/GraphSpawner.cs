@@ -28,6 +28,7 @@ public class GraphSpawner : MonoBehaviour
 
     [SerializeField] private GameObject spawnOrigin;
     [SerializeField] private Room roomCopy;
+    [SerializeField] private List<Room> roomList;
 
     int gridSizeX = 8, gridSizeY = 8;
     List<Vector2> takenPositions = new List<Vector2>();
@@ -48,7 +49,6 @@ public class GraphSpawner : MonoBehaviour
         {
             Debug.Log(item);
         }
-        Debug.Log(takenPositions.Count);
     }
 
     void CreateRooms()
@@ -58,31 +58,47 @@ public class GraphSpawner : MonoBehaviour
         Room curRoom = GameObject.Instantiate(this.roomCopy, this.transform);
         curRoom.transform.position = spawnOrigin.transform.position;
         curRoom.setCoordinate(midGraph);
+        roomList.Add(curRoom);
 
         //add coordinate to list
         takenPositions.Add(midGraph);
 
         Vector2 checkPos = Vector2.zero;
         string direction;
+        int index;
         //float randomCompare = 0.2f, randomCompareStart = 0.2f, randomCompareEnd = 0.01f;
         for (int i = 0; i < numberOfRooms - 1; i++)
         {
-            Debug.Log("Hello");
             //float randomPerc = ((float)i) / (((float)numberOfRooms - 1));
             //randomCompare = Mathf.Lerp(randomCompareStart, randomCompareEnd, randomPerc);
-            (checkPos, direction) = NewPosition();
+            (checkPos, direction, index) = NewPosition();
+            Debug.Log(direction);
+            curRoom = roomList[index];
 
             Room nextRoom = GameObject.Instantiate(this.roomCopy, this.transform);
             nextRoom.transform.position = curRoom.openWallsAndGetPosition(direction);
             nextRoom.setCoordinate(checkPos);
-            curRoom = nextRoom;
+            switch (direction)
+            {
+                case GraphGameEventNames.DIRECTION_UP:
+                    nextRoom.openWallsAndGetPosition(GraphGameEventNames.DIRECTION_DOWN); break;
+                case GraphGameEventNames.DIRECTION_DOWN:
+                    nextRoom.openWallsAndGetPosition(GraphGameEventNames.DIRECTION_UP); break;
+                case GraphGameEventNames.DIRECTION_LEFT:
+                    nextRoom.openWallsAndGetPosition(GraphGameEventNames.DIRECTION_RIGHT); break;
+                case GraphGameEventNames.DIRECTION_RIGHT:
+                    nextRoom.openWallsAndGetPosition(GraphGameEventNames.DIRECTION_LEFT); break;
+            }
 
-            takenPositions.Insert(0, checkPos);
+            roomList.Add(nextRoom);
+            takenPositions.Add(checkPos);
+            Debug.Log(takenPositions.Count);
         }
     }
 
-    (Vector2, string) NewPosition()
+    (Vector2, string, int) NewPosition()
     {
+        int finalIndex;
         int x = 0, y = 0;
         Vector2 checkingPos = Vector2.zero;
         string direction;
@@ -120,7 +136,8 @@ public class GraphSpawner : MonoBehaviour
                 }
             }
             checkingPos = new Vector2(x, y);
+            finalIndex = index;
         } while (takenPositions.Contains(checkingPos) || x >= gridSizeX/2 || x < -gridSizeX / 2 || y >= gridSizeY / 2 || y < -gridSizeY/2); //make sure the position is valid
-        return (checkingPos, direction);
+        return (checkingPos, direction, finalIndex);
     }
 }
