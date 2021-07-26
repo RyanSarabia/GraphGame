@@ -13,10 +13,10 @@ public class Room : MonoBehaviour
 
     private Vector2 coordinate = new Vector2();
 
-    private Room upNeighbor;
-    private Room rightNeighbor;
-    private Room leftNeighbor;
-    private Room downNeighbor;
+    [SerializeField] private Room upNeighbor;
+    [SerializeField] private Room rightNeighbor;
+    [SerializeField] private Room leftNeighbor;
+    [SerializeField] private Room downNeighbor;
 
     // Start is called before the first frame update
     void Start()
@@ -52,7 +52,7 @@ public class Room : MonoBehaviour
 
     public void lightOn()
     {
-        roomLight.SetActive(true);
+        this.roomLight.SetActive(true);
     }
 
     public void lightOff()
@@ -84,7 +84,7 @@ public class Room : MonoBehaviour
                 leftNeighbor = neighbor; break;
             case GraphGameEventNames.DIRECTION_RIGHT:
                 rightWall.openWall(); 
-                leftNeighbor = neighbor; break;
+                rightNeighbor = neighbor; break;
         }
     }
     public Room getNeighbor(string localDirection)
@@ -102,10 +102,14 @@ public class Room : MonoBehaviour
     public List<Room> getNeighbors()
     {
         List<Room> neighbors = new List<Room>();
-        neighbors.Add(upNeighbor);
-        neighbors.Add(downNeighbor);
-        neighbors.Add(leftNeighbor);
-        neighbors.Add(rightNeighbor);
+        if (upNeighbor != null)
+            neighbors.Add(upNeighbor);
+        if (downNeighbor != null)
+            neighbors.Add(downNeighbor);
+        if (leftNeighbor != null)
+            neighbors.Add(leftNeighbor);
+        if (rightNeighbor != null)
+            neighbors.Add(rightNeighbor);
         return neighbors;
     }
 }

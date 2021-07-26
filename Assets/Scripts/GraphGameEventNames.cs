@@ -6,6 +6,7 @@ public class GraphGameEventNames
 {
     //Events
     public const string LIGHT_UP = "LIGHT_UP";
+    public const string BFS_BUTTON_CLICK = "BFS_BUTTON_CLICK";
 
     //Strings
     public const string NORTH = "NORTH";

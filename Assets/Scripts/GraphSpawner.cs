@@ -31,10 +31,9 @@ public class GraphSpawner : MonoBehaviour
     [SerializeField] private int numberOfRooms = 10;
     [SerializeField] private int gridSizeX = 8, gridSizeY = 8;
     [SerializeField] private List<Room> roomList;
+    private Room firstRoom;
 
     List<Vector2> takenPositions = new List<Vector2>();
-
-    Queue<Room> branches = new Queue<Room>();
 
     // Start is called before the first frame update
     void Start()
@@ -45,10 +44,10 @@ public class GraphSpawner : MonoBehaviour
         }
 
         CreateRooms();
-        foreach (var item in takenPositions)
-        {
-            Debug.Log(item);
-        }
+        //foreach (var item in takenPositions)
+        //{
+        //    Debug.Log(item);
+        //}
     }
 
     void CreateRooms()
@@ -59,6 +58,7 @@ public class GraphSpawner : MonoBehaviour
         curRoom.transform.position = spawnOrigin.transform.position;
         curRoom.setCoordinate(midGraph);
         roomList.Add(curRoom);
+        firstRoom = curRoom;
 
         //add coordinate to list
         takenPositions.Add(midGraph);
@@ -72,7 +72,6 @@ public class GraphSpawner : MonoBehaviour
             //float randomPerc = ((float)i) / (((float)numberOfRooms - 1));
             //randomCompare = Mathf.Lerp(randomCompareStart, randomCompareEnd, randomPerc);
             (checkPos, direction, index) = NewPosition();
-            Debug.Log(direction);
             curRoom = roomList[index];
 
             Room nextRoom = GameObject.Instantiate(this.roomCopy, this.transform);
@@ -85,7 +84,6 @@ public class GraphSpawner : MonoBehaviour
 
             roomList.Add(nextRoom);
             takenPositions.Add(checkPos);
-            Debug.Log(takenPositions.Count);
         }
     }
 
@@ -141,5 +139,15 @@ public class GraphSpawner : MonoBehaviour
 
         } while (takenPositions.Contains(checkingPos) || x >= gridSizeX/2 || x < -gridSizeX / 2 || y >= gridSizeY / 2 || y < -gridSizeY/2); //make sure the position is valid
         return (checkingPos, direction, finalIndex);
+    }
+
+    public List<Room> getRoomList()
+    {
+        return this.roomList;
+    }
+
+    public Room getFirstRoom()
+    {
+        return this.firstRoom;
     }
 }
