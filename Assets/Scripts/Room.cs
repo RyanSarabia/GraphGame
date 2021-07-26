@@ -31,12 +31,11 @@ public class Room : MonoBehaviour
     }
 
 
-    public Vector3 openWallsAndGetPosition(string direction)
+    public Vector3 getNeighborSpawnPosition(string direction)
     {
         switch (direction)
         {
             case GraphGameEventNames.DIRECTION_UP:
-                upWall.openWall();
                 return upWall.getNextRoomPosition();
             case GraphGameEventNames.DIRECTION_DOWN:
                 downWall.openWall();
@@ -70,14 +69,22 @@ public class Room : MonoBehaviour
         return coordinate;
     }
 
-    public void setNeighbor(Room neighbor, string localDirection)
+    public void setNeighborAndOpenWalls(Room neighbor, string localDirection)
     {
         switch (localDirection)
         {
-            case GraphGameEventNames.DIRECTION_UP: upNeighbor = neighbor; break;
-            case GraphGameEventNames.DIRECTION_DOWN: downNeighbor = neighbor; break;
-            case GraphGameEventNames.DIRECTION_LEFT: leftNeighbor = neighbor; break;
-            case GraphGameEventNames.DIRECTION_RIGHT: leftNeighbor = neighbor; break;
+            case GraphGameEventNames.DIRECTION_UP:
+                upWall.openWall(); 
+                upNeighbor = neighbor; break;
+            case GraphGameEventNames.DIRECTION_DOWN:
+                downWall.openWall(); 
+                downNeighbor = neighbor; break;
+            case GraphGameEventNames.DIRECTION_LEFT:
+                leftWall.openWall(); 
+                leftNeighbor = neighbor; break;
+            case GraphGameEventNames.DIRECTION_RIGHT:
+                rightWall.openWall(); 
+                leftNeighbor = neighbor; break;
         }
     }
     public Room getNeighbor(string localDirection)

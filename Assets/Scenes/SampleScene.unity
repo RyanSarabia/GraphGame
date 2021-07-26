@@ -176,7 +176,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnOrigin: {fileID: 1042385623}
   roomCopy: {fileID: 8941308946235080655, guid: 65ab32eeccee1df44bef44c0cb49ebfb, type: 3}
-  numberOfRooms: 10
+  roomList: []
+  numberOfRooms: 20
 --- !u!1001 &417485125
 PrefabInstance:
   m_ObjectHideFlags: 0

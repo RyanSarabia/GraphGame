@@ -28,11 +28,11 @@ public class GraphSpawner : MonoBehaviour
 
     [SerializeField] private GameObject spawnOrigin;
     [SerializeField] private Room roomCopy;
+    [SerializeField] private int numberOfRooms = 10;
+    [SerializeField] private int gridSizeX = 8, gridSizeY = 8;
     [SerializeField] private List<Room> roomList;
 
-    int gridSizeX = 8, gridSizeY = 8;
     List<Vector2> takenPositions = new List<Vector2>();
-    public int numberOfRooms = 10;
 
     Queue<Room> branches = new Queue<Room>();
 
@@ -76,10 +76,12 @@ public class GraphSpawner : MonoBehaviour
             curRoom = roomList[index];
 
             Room nextRoom = GameObject.Instantiate(this.roomCopy, this.transform);
-            nextRoom.transform.position = curRoom.openWallsAndGetPosition(direction);
+            nextRoom.transform.position = curRoom.getNeighborSpawnPosition(direction);
+            curRoom.setNeighborAndOpenWalls(nextRoom, direction);
+
             nextRoom.setCoordinate(checkPos);
             string oppositeDirection = GraphGameEventNames.oppositeDirection(direction);
-            nextRoom.openWallsAndGetPosition(oppositeDirection);
+            nextRoom.setNeighborAndOpenWalls(curRoom, oppositeDirection);
 
             roomList.Add(nextRoom);
             takenPositions.Add(checkPos);
@@ -128,6 +130,15 @@ public class GraphSpawner : MonoBehaviour
             }
             checkingPos = new Vector2(x, y);
             finalIndex = index;
+
+            if(takenPositions.Contains(checkingPos))
+            {
+                Room roomA = roomList[index];
+                Room roomB = roomList[takenPositions.IndexOf(checkingPos)];
+                roomA.setNeighborAndOpenWalls(roomB, direction);
+                roomB.setNeighborAndOpenWalls(roomA, GraphGameEventNames.oppositeDirection(direction));
+            }
+
         } while (takenPositions.Contains(checkingPos) || x >= gridSizeX/2 || x < -gridSizeX / 2 || y >= gridSizeY / 2 || y < -gridSizeY/2); //make sure the position is valid
         return (checkingPos, direction, finalIndex);
     }
