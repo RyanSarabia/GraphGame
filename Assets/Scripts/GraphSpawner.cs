@@ -78,17 +78,8 @@ public class GraphSpawner : MonoBehaviour
             Room nextRoom = GameObject.Instantiate(this.roomCopy, this.transform);
             nextRoom.transform.position = curRoom.openWallsAndGetPosition(direction);
             nextRoom.setCoordinate(checkPos);
-            switch (direction)
-            {
-                case GraphGameEventNames.DIRECTION_UP:
-                    nextRoom.openWallsAndGetPosition(GraphGameEventNames.DIRECTION_DOWN); break;
-                case GraphGameEventNames.DIRECTION_DOWN:
-                    nextRoom.openWallsAndGetPosition(GraphGameEventNames.DIRECTION_UP); break;
-                case GraphGameEventNames.DIRECTION_LEFT:
-                    nextRoom.openWallsAndGetPosition(GraphGameEventNames.DIRECTION_RIGHT); break;
-                case GraphGameEventNames.DIRECTION_RIGHT:
-                    nextRoom.openWallsAndGetPosition(GraphGameEventNames.DIRECTION_LEFT); break;
-            }
+            string oppositeDirection = GraphGameEventNames.oppositeDirection(direction);
+            nextRoom.openWallsAndGetPosition(oppositeDirection);
 
             roomList.Add(nextRoom);
             takenPositions.Add(checkPos);

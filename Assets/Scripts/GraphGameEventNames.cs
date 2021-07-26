@@ -20,4 +20,20 @@ public class GraphGameEventNames
     public const string DIRECTION_DOWN = "DIRECTION_DOWN";
     public const string DIRECTION_LEFT = "DIRECTION_LEFT";
     public const string DIRECTION_RIGHT = "DIRECTION_RIGHT";
+
+    public static string oppositeDirection(string direction)
+    {
+        switch (direction)
+        {
+            case DIRECTION_UP:
+                return DIRECTION_DOWN;
+            case DIRECTION_DOWN:
+                return DIRECTION_UP;
+            case DIRECTION_LEFT:
+                return DIRECTION_RIGHT;
+            case DIRECTION_RIGHT:
+                return DIRECTION_LEFT;
+            default: return null;
+        }
+    }
 }
