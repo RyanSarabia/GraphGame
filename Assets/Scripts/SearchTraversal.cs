@@ -6,7 +6,7 @@ public class SearchTraversal : MonoBehaviour
 {
     [SerializeField] GraphSpawner graphContainer;
     List<Room> searchQueue;
-
+    int ctr = 0;
     Room firstRoom;
     List<Room> roomList;
 
@@ -28,7 +28,8 @@ public class SearchTraversal : MonoBehaviour
 
     public void BFS()
     {
-        //Debug.Log(graphContainer);
+        ctr++;
+        Debug.Log(ctr);
         Debug.Log(graphContainer.getFirstRoom());
         firstRoom = graphContainer.getFirstRoom();
         roomList = graphContainer.getRoomList();
@@ -40,8 +41,6 @@ public class SearchTraversal : MonoBehaviour
         Room curRoom = firstRoom;
         while(searchQueue.Count < roomList.Count)
         {
-            //Debug.Log("SearchCount:" + searchQueue.Count);
-            //Debug.Log("SearchCtr:" + searchQueueCtr);
             List<Room> neighbors = curRoom.getNeighbors();
             foreach (Room neighbor in neighbors)
             {
@@ -54,18 +53,22 @@ public class SearchTraversal : MonoBehaviour
             curRoom = searchQueue[searchQueueCtr];
         }
 
-        while (searchQueue.Count > 0)
-        {
-            Room lightUpRoom = searchQueue[0];
-            searchQueue.RemoveAt(0);
-            //StartCoroutine(lighterDelay(lightUpRoom));
-            lightUpRoom.lightOn();
-        }
+        Room lightUpRoom = searchQueue[0];
+
+        StartCoroutine(lighterDelay(lightUpRoom));
+
     }
 
-    //private IEnumerator lighterDelay(Room lightUpRoom)
-    //{
-    //    yield return new WaitForSeconds(3.0f);
-    //    Debug.Log("Running Coroutine");
-    //}
+    private IEnumerator lighterDelay(Room lightUpRoom)
+    {
+        Debug.Log("Running Coroutine");
+        lightUpRoom.lightOn();
+        yield return new WaitForSeconds(1.0f);
+        searchQueue.RemoveAt(0);
+        
+        if (searchQueue.Count > 0)
+        {
+            StartCoroutine(lighterDelay(searchQueue[0]));
+        }
+    }
 }
