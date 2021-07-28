@@ -72,13 +72,10 @@ public class SearchTraversal : MonoBehaviour
         searchQueue = new List<Room>();
         dfsStack = new Stack<Room>();
         dfsStack.Push(firstRoom);
-
-        Debug.Log("Before Loop");
+       
         while (dfsStack.Count > 0)
         {
-            Room curRoom = dfsStack.Pop();
-            Debug.Log("after pop");
-
+            Room curRoom = dfsStack.Pop();         
 
             if (searchQueue.Contains(curRoom))
             {
@@ -94,12 +91,9 @@ public class SearchTraversal : MonoBehaviour
                 {
                     dfsStack.Push(neighbor);
                 }
-            }
-            Debug.Log("after neighbors");
+            }    
 
-        }
-        Debug.Log("after Loop");
-
+        } 
 
         Room lightUpRoom = searchQueue[0];
 
