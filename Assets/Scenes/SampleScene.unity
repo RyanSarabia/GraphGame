@@ -749,6 +749,7 @@ GameObject:
   - component: {fileID: 784384409}
   - component: {fileID: 784384408}
   - component: {fileID: 784384407}
+  - component: {fileID: 784384410}
   - component: {fileID: 784384406}
   m_Layer: 5
   m_Name: Button (1)
@@ -840,7 +841,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 784384408}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 784384410}
+        m_TargetAssemblyTypeName: LightButton, Assembly-CSharp
+        m_MethodName: OnDFSButtonClicked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &784384408
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -879,6 +892,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 784384404}
   m_CullTransparentMesh: 1
+--- !u!114 &784384410
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 784384404}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0913e0bdad1b329468186863ef513fd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &820624386
 GameObject:
   m_ObjectHideFlags: 0
