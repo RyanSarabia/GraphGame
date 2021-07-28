@@ -6,6 +6,8 @@ public class SearchTraversal : MonoBehaviour
 {
     [SerializeField] GraphSpawner graphContainer;
     List<Room> searchQueue;
+    List<Room> visited;
+    Stack<Room> dfsStack;
     int ctr = 0;
     Room firstRoom;
     List<Room> roomList;
@@ -14,6 +16,7 @@ public class SearchTraversal : MonoBehaviour
     void Start()
     {
         EventBroadcaster.Instance.AddObserver(GraphGameEventNames.BFS_BUTTON_CLICK, this.BFS);
+        EventBroadcaster.Instance.AddObserver(GraphGameEventNames.DFS_BUTTON_CLICK, this.DFS);
     }
 
     // Update is called once per frame
@@ -24,6 +27,8 @@ public class SearchTraversal : MonoBehaviour
     private void OnDestroy()
     {
         EventBroadcaster.Instance.RemoveObserver(GraphGameEventNames.BFS_BUTTON_CLICK);
+        EventBroadcaster.Instance.RemoveObserver(GraphGameEventNames.DFS_BUTTON_CLICK);
+
     }
 
     public void BFS()
@@ -57,6 +62,48 @@ public class SearchTraversal : MonoBehaviour
 
         StartCoroutine(lighterDelay(lightUpRoom));
 
+    }
+
+    public void DFS()
+    {
+        Debug.Log(graphContainer.getFirstRoom());
+        firstRoom = graphContainer.getFirstRoom();
+
+        searchQueue = new List<Room>();
+        dfsStack = new Stack<Room>();
+        dfsStack.Push(firstRoom);
+
+        Debug.Log("Before Loop");
+        while (dfsStack.Count > 0)
+        {
+            Room curRoom = dfsStack.Pop();
+            Debug.Log("after pop");
+
+
+            if (searchQueue.Contains(curRoom))
+            {
+                continue;
+            }
+
+            searchQueue.Add(curRoom);
+
+            List<Room> neighbors = curRoom.getNeighbors();
+            foreach (Room neighbor in neighbors)
+            {
+                if (!searchQueue.Contains(neighbor))
+                {
+                    dfsStack.Push(neighbor);
+                }
+            }
+            Debug.Log("after neighbors");
+
+        }
+        Debug.Log("after Loop");
+
+
+        Room lightUpRoom = searchQueue[0];
+
+        StartCoroutine(lighterDelay(lightUpRoom));
     }
 
     private IEnumerator lighterDelay(Room lightUpRoom)

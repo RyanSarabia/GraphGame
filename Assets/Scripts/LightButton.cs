@@ -20,4 +20,10 @@ public class LightButton : MonoBehaviour
         EventBroadcaster.Instance.PostEvent(GraphGameEventNames.BFS_BUTTON_CLICK);
 
     }
+
+    public void OnDFSButtonClicked()
+    {
+        EventBroadcaster.Instance.PostEvent(GraphGameEventNames.DFS_BUTTON_CLICK);
+
+    }
 }
