@@ -16,7 +16,7 @@ public class SearchTraversal : MonoBehaviour
     void Start()
     {
         EventBroadcaster.Instance.AddObserver(GraphGameEventNames.BFS_BUTTON_CLICK, this.BFS);
-        EventBroadcaster.Instance.AddObserver(GraphGameEventNames.DFS_BUTTON_CLICK, this.DFS);
+        EventBroadcaster.Instance.AddObserver(GraphGameEventNames.DFS_BUTTON_CLICK, this.DFSrecursive);
     }
 
     // Update is called once per frame
@@ -94,6 +94,34 @@ public class SearchTraversal : MonoBehaviour
             }    
 
         } 
+
+        Room lightUpRoom = searchQueue[0];
+
+        StartCoroutine(lighterDelay(lightUpRoom));
+    }
+
+    public void DFSrecursive()
+    {
+        Debug.Log(graphContainer.getFirstRoom());
+        firstRoom = graphContainer.getFirstRoom();
+
+        searchQueue = new List<Room>();
+
+        void recursion(Room node)
+        {
+            searchQueue.Add(node);
+
+            List<Room> neighbors = node.getNeighbors();
+            foreach (Room neighbor in neighbors)
+            {
+                if (!searchQueue.Contains(neighbor))
+                {
+                    recursion(neighbor);
+                }
+            }
+        }
+
+        recursion(firstRoom);
 
         Room lightUpRoom = searchQueue[0];
 
