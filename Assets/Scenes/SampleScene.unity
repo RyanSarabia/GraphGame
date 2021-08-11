@@ -484,6 +484,7 @@ MonoBehaviour:
   gridSizeX: 8
   gridSizeY: 8
   roomList: []
+  spawnTrees: 0
 --- !u!1001 &417485125
 PrefabInstance:
   m_ObjectHideFlags: 0
