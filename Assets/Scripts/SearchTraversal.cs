@@ -142,4 +142,15 @@ public class SearchTraversal : MonoBehaviour
             StartCoroutine(lighterDelay(searchQueue[0], n));
         }
     }
+
+    public void lightOut()
+    {
+        roomList = graphContainer.getRoomList();
+
+        foreach (Room room in roomList)
+        {
+            room.lightOff();
+        }
+
+    }
 }
