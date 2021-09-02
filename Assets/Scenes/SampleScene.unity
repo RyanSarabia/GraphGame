@@ -1017,6 +1017,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   graphContainer: {fileID: 407792073}
+  nRooms: 5
 --- !u!4 &845068373
 Transform:
   m_ObjectHideFlags: 0
@@ -1508,6 +1509,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   graphContainer: {fileID: 0}
+  nRooms: 5
 --- !u!4 &1401398921
 Transform:
   m_ObjectHideFlags: 0

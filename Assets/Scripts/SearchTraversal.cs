@@ -5,6 +5,7 @@ using UnityEngine;
 public class SearchTraversal : MonoBehaviour
 {
     [SerializeField] GraphSpawner graphContainer;
+    [SerializeField] int nRooms;
     List<Room> searchQueue;
     List<Room> visited;
     Stack<Room> dfsStack;
@@ -35,7 +36,7 @@ public class SearchTraversal : MonoBehaviour
     {
         ctr++;
         Debug.Log(ctr);
-        Debug.Log(graphContainer.getFirstRoom());
+        //Debug.Log(graphContainer.getFirstRoom());
         firstRoom = graphContainer.getFirstRoom();
         roomList = graphContainer.getRoomList();
 
@@ -59,8 +60,8 @@ public class SearchTraversal : MonoBehaviour
         }
 
         Room lightUpRoom = searchQueue[0];
-
-        StartCoroutine(lighterDelay(lightUpRoom));
+        int n = 0;
+        StartCoroutine(lighterDelay(lightUpRoom, n));
 
     }
 
@@ -96,8 +97,8 @@ public class SearchTraversal : MonoBehaviour
         } 
 
         Room lightUpRoom = searchQueue[0];
-
-        StartCoroutine(lighterDelay(lightUpRoom));
+        int n = 0;
+        StartCoroutine(lighterDelay(lightUpRoom, n));
     }
 
     public void DFSrecursive()
@@ -124,20 +125,21 @@ public class SearchTraversal : MonoBehaviour
         recursion(firstRoom);
 
         Room lightUpRoom = searchQueue[0];
-
-        StartCoroutine(lighterDelay(lightUpRoom));
+        int n = 0;
+        StartCoroutine(lighterDelay(lightUpRoom, n));
     }
 
-    private IEnumerator lighterDelay(Room lightUpRoom)
+    private IEnumerator lighterDelay(Room lightUpRoom, int n)
     {
-        Debug.Log("Running Coroutine");
+        Debug.Log("Running Coroutine" + "energy count: " + n);
         lightUpRoom.lightOn();
+        n++;
         yield return new WaitForSeconds(1.0f);
         searchQueue.RemoveAt(0);
         
-        if (searchQueue.Count > 0)
+        if (searchQueue.Count > 0 && n < nRooms)
         {
-            StartCoroutine(lighterDelay(searchQueue[0]));
+            StartCoroutine(lighterDelay(searchQueue[0], n));
         }
     }
 }
